@@ -91,7 +91,7 @@ app.set("views", path.join(__dirname, "views"));
 
 // Databases connection
 async function main() {
-    await mongoose.connect("mongodb://localhost:27017/Mytravel",{
+    await mongoose.connect("mongodb+srv://buntymali99810:9981022296@Shivam@cluster0.sxp4urq.mongodb.net/",{
         useNewUrlParser: true,
         useUnifiedTopology: true
     });
