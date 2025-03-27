@@ -1,0 +1,156 @@
+<% layout('./layout/bolilarplate') -%>
+<style>
+  .rowsa{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .filters {
+    text-align: center;
+    margin-right: 2rem;
+    margin-top: 2rem;
+    opacity: 0.7;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.filters:hover {
+    opacity: 1;
+    transform: scale(1.2); 
+}
+ .toggle{
+  border: 1px ,solid ,black;
+  border-radius: 1rem;
+  height: 3.5rem;
+  padding:1rem;
+  margin-left:2rem;
+  display:flex;
+  align-items: center;
+ }
+  .hide{
+    display:none;
+  }
+
+  @media (min-width: 768px) { 
+    .filters {
+        display: block; /* ya jo bhi display style chahiye */
+    }
+}
+
+@media (max-width: 767px) { 
+    .filters{
+        display: none;
+    }
+}
+</style>
+
+
+<body>
+
+<div  id="filters" class="rowsa">
+   <div class="filters">
+    <div><a href="/listing"><i class="fa-solid fa-fire"></i></a></i></div>
+    <p>Trending</p>
+   </div>
+   <div class="filters" class="filter">
+    <div><a href=""><i class="fa-solid fa-bed"></i></a> </div>
+    <p class="filtername">Room</p>
+   </div>
+   <div class="filters">
+    <div><a href="" class="filter"><i class="fa-solid fa-mountain-city"></i></a> </div>
+    <p class="filtername">Iconic citie</p>
+   </div>
+   <div class="filters">
+    <div><a href="" class="filter"> <i class="fa-solid fa-mountain"></i></a></div>
+    <p>Mountains</p>
+    <p class="filtername"></p>
+   </div>
+   <div class="filters">
+    <div><a href="" class="filter"><i class="fa-solid fa-fort-awesome"></i></a> </div>
+    <p class="filtername">Castle</p>
+   </div>
+   <div class="filters">
+    <div><a href="" class="filter"> <i class="fa-solid fa-person-swimming"></i></a></div>
+    <p class="filtername">Pool</p>
+   </div>
+
+   <div class="filters">
+    <div><a href="" class="filter"><i class="fa-solid fa-campground"></i></a> </div>
+    <p class="filtername">Camping</p>
+   </div>
+
+   <div class="filters">
+    <div> <a href="" class="filter"><i class="fa-solid fa-cow"></i></a></div>
+    <p class="filtername">Fram</p>
+   </div>
+
+   <div class="filters">
+    <div><a href="" class="filter"><i class="fa-solid fa-water"></i></a></div>
+    <p class="filtername">Lake</p>
+   </div>
+  
+   <div class="filters">
+    <div> <a href="" class="filter"><i class="fa-solid fa-snowflake"></i></a></div>
+    <p class="filtername">Snowflake</p>
+   </div>
+
+   <div class="toggle">
+    <div class="form-check form-switch form-check-reverse">
+      <input class="form-check-input" type="checkbox" id="flexSwitchCheckReverse">
+      <label class="form-check-label" for="flexSwitchCheckReverse">Reverse switch checkbox input</label>
+    </div>
+  </div>
+   
+</div>
+
+
+<h1>All Listings</h1>
+<div class="row row-cols-lg-4 row-cols-md-2 row-cols-sm-1">
+  <% for(let list of data) { %>
+    <% if (list.category.toLowerCase() === categorys.toLowerCase()) { %>
+      <a href="/listing/<%= list._id %>" class="listing-link">
+      <div class="card" style="width: 20rem;">
+        <img src="<%= list.image.url %>" class="card-img-top" alt="..." style="height: 20rem;">
+        <div class="card-img-overlay">New</div>
+        <div class="card-body">
+          <p class="card-text">
+            <b><%= list.title %></b> 
+            <br>
+            &#8377;<%= list.price ? list.price.toLocaleString() : "Price Not Available" %>
+            <i class="tax hide">+18% </i>
+          </p>
+        </div>
+      </div>
+    </a>
+    <% } %>
+  <% } %>
+</div>
+</body>
+
+<script>
+   let pricetoggle=document.getElementById("flexSwitchCheckReverse");
+ pricetoggle.addEventListener("click",()=>{
+         let tax=document.getElementsByClassName("tax");
+         for(let taxs of tax){
+            taxs.classList.toggle("hide");
+         }
+ });
+
+ document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll("#filters .filters a").forEach(anchor => {
+        anchor.addEventListener("click", function (event) {
+            event.preventDefault(); // Default navigation रोकें
+            
+            let category = this.closest(".filters").querySelector(".filtername")?.innerText.trim().toLowerCase();
+            
+            if (category) {
+                let newHref = `/listing/filter/${category.replace(/\s+/g, "-")}`; // Space को '-' में बदलें
+                this.setAttribute("href", newHref); // href अपडेट करें
+                
+                window.location.href = newHref; // Redirect करें
+            }
+        });
+    });
+});
+
+
+</script>

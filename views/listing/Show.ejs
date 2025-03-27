@@ -1,0 +1,146 @@
+<% layout('./layout/bolilarplate') -%>
+<style>
+  
+</style>
+<!-- show place hotel -->
+<body>
+    <div class="row">
+    <div class="col-8 offset-2">
+        <h2><%= data.title %></h2>
+        </div>
+
+    <div class="card col-6 offset-2">
+        <img src="<%= data.image.url %>" class="card-img-top show-image" alt="listing-image"  >
+   <div class="card-body">
+    <p class="card-text">
+      <br>
+           Owned By :- <%=data.Owner.username%> <br>
+        <%= data.description %> <br>
+        &#8377; <%= data.price %> <br>
+        <%= data.location %> <br>
+        <%= data.country %>
+
+               </p>
+         </div>
+
+    </div>
+   
+  <!-- booking -->
+    <form      method="GET" novalidate  class="needs-validation" action="/booking/<%= data._id %>">
+      <div class="booking-card  card col-6 offset-2 ">
+          <div class="date-box">
+            <div class="mb-3">
+                <strong>CHECK-IN</strong><br>
+                <input type="date" id="checkin" name="checkin" class="form-control" required >
+                <div class="invalid-feedback">Please enter a CheckIn Data.</div>
+                <div class="valid-feedback">Looks good!</div>
+            </div>
+            <div class="mb-3">
+                <strong>CHECKOUT</strong><br>
+                <input type="date" id="checkout" name="checkout" class="form-control" required >
+                <div class="invalid-feedback">Please enter a  CheckOut Data</div>
+                <div class="valid-feedback">Looks good!</div>
+            </div>
+        </div>
+        
+        <div class="guest-box mt-3 mb-3">
+          <label for="guests">GUESTS</label>
+          <select id="guests" class="guest form-control" name="guests">
+              <option value="1" selected>1 guest</option> 
+              <option value="2">2 guests</option>
+              <option value="3">3 guests</option>
+              <option value="4">4 guests</option>
+          </select>
+      </div>
+        <button class="reserve-btn btn  btn-outline-danger">Reserve</button>
+        <p style="color: gray; font-size: 12px; margin-top: 5px;">You won't be charged yet</p>
+      </div>
+ </form>
+ 
+ <!-- Edit and Delete -->
+        <% if(loginOrnot && loginOrnot._id.equals( data.Owner._id)) { %>
+        <div class="btns col-6 offset-2">
+            <form action="/listing/<%= data._id %>/edit">
+                <button class="btn btn-outline-danger bt">Editi details</button>
+            </form>
+             <form method="POST" action="/listing/<%=data._id %>?method=DELETE">
+                <button class="btn btn-outline-danger bt">delete</button>
+            </form>
+         </div>
+       <% } %>
+
+    
+</div>
+
+
+
+<% if (loginOrnot) { %>
+ <!-- posting review -->
+<hr>
+<div class="row">
+    <div class="card col-8 offset-2 mb-3">
+        <h4>Leave Review</h4>
+        <form method="post" class="needs-validation" novalidate action="/listing/<%= data._id %>/reviews">
+           
+              <fieldset class="starability-slot black" >
+                <input type="radio" id="first-rate1" name="Review[rating]" value="1" />
+                <label for="first-rate1" title="Terrible">1 star</label>
+                <input type="radio" id="first-rate2" name="Review[rating]" value="2" />
+                <label for="first-rate2" title="Not good">2 stars</label>
+                <input type="radio" id="first-rate3" name="Review[rating]" value="3" />
+                <label for="first-rate3" title="Average">3 stars</label>
+                <input type="radio" id="first-rate4" name="Review[rating]" value="4" />
+                <label for="first-rate4" title="Very good">4 stars</label>
+                <input type="radio" id="first-rate5" name="Review[rating]" value="5" />
+                <label for="first-rate5" title="Amazing">5 stars</label>
+              </fieldset>
+
+
+
+
+            <div class="mt-3 mb-3">
+                <label for="comment">Comment</label>
+                <textarea  required  cols="30" rows="5" id="comment" class="form-control" name="Review[comment]"></textarea>
+                <div class="invalid-feedback">Please enter a valid Comment</div>
+            </div>
+            <button class="btn btn-outline-danger">Post Review</button>
+        </form>
+        <hr>
+
+    <!-- review -->
+        <div class="row ">
+             <% if (data.reviews && data.reviews.length > 0) { %>
+                  <% for (let review of data.reviews) { %>
+                    <div class="card borderk col-5 ms-3 mb-3 mt-3">
+                      <div class="card-body">
+                          <h5 class="card-title"><%=review.author.username%> </h5>
+                          <p class="card-text"><%= review.comment %></p>
+                          <p class="starability-result black" data-rating="<%= review.rating %>"></p>
+
+                         
+                         <% if(loginOrnot && loginOrnot._id.equals(review.author._id)) { %>
+
+                          <form action="/listing/<%= data._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST">
+                            <button class="btn btn-outline-danger mb-2">Delete</button>
+                          </form>
+
+                        <%}%>
+
+                      </div>
+                   </div>
+                  <% } %>
+                <% } else { %>
+                  <p>No reviews yet. Be the first to leave one!</p>
+                <% } %>
+        
+        </div>
+    </div>
+</div>
+
+<% } %>
+
+<!-- review -->
+
+
+
+</body>

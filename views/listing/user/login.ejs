@@ -1,0 +1,32 @@
+<%layout("/layout/bolilarplate.ejs")%>
+
+<body>
+    <div class="container ">
+        <div class="row ">
+            <h1 class="col-4 offset-4 mt-3">Login on TripNest</h1>
+            <div class="col-4 offset-4 mt-3">
+              <form action="/login" method="POST" novalidate class="needs-validation" >
+                    
+                <!-- Title -->
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input name="username" id="username" placeholder="Enter the username" type="text" class="form-control" required />
+                    <div class="valid-feedback">Looks good!</div>
+                    <div class="invalid-feedback">Please enter a valid Username.</div>
+                </div>
+               
+                <!-- /password -->
+
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input name="password" id="password" placeholder="Enter the password" type="password" class="form-control" required />
+                    <div class="invalid-feedback">Please enter a valid password.</div>
+                </div>
+                 
+                <button  type="submit" class="btn btn-outline-success">SignUp</button>
+              </form>
+
+                  </div>
+            </div>   
+      </div>          
+</body>

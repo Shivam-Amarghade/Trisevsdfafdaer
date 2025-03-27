@@ -1,0 +1,66 @@
+<style>
+  .btn-search{
+    border-radius: 25px;
+    padding:0,1.5rem,0,1.5rem;
+    }
+    .search-text{
+      padding:0.5rem,8rem,0.5rem,8rem;
+      border-radius: 25px;
+      font-size: .8rem;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+   }
+    .search-text:hover{
+     opacity: 1;
+    transform: scale(1.2); 
+    margin-right: 1.5rem;
+    }
+</style>
+
+
+<nav class="navbar navbar-expand-md bg-body-tertiary border-bottom sticky-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#"><i id="logo" class="fa-solid fa-location-arrow"></i></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+        <a class="nav-link" href="/listing">Explore</a>
+       </div>
+    
+       <div class="navbar-nav ms-auto">
+       <form class="d-flex "  role="search" action="/listing/search/item" method="GET">
+        <input name="searchText"  class="form-control me-2 search-text" type="search" placeholder="Search " aria-label="Search">
+        <button class="btn btn-danger btn-search" type="submit"><b>Search</b></button>
+      </form>
+      </div>
+
+        <div class="navbar-nav ms-auto ">
+          <a class="nav-link" href="/listing/new">TripNext your home </a>
+          <% if (!loginOrnot) { %>
+            <a class="nav-link " aria-current="page" href="/signup"><b>SignUp</b></a>
+            <a class="nav-link" href="/login"><b>LogIn</b></a>
+          <% } %>
+          
+          
+          
+       
+          <% if (loginOrnot) { %>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown">
+                <img src="https://as1.ftcdn.net/v2/jpg/05/60/26/08/1000_F_560260880_O1V3Qm2cNO5HWjN66mBh2NrlPHNHOUxW.jpg" class="rounded-circle me-2" alt="Profile" width="30" height="30">
+                Profile
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                <li><a class="dropdown-item" href="#">My Orders</a></li>
+                <li><a class="dropdown-item" href="#">clients</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li>  <a class="nav-link" href="/logout"><b>LogOut</b></a></li>
+            </ul>
+        </li>
+        <% } %>
+          
+        </div>
+      </div>
+    </div>
+  </nav>
